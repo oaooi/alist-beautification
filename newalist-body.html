@@ -1,0 +1,44 @@
+<!-- 2025-05-18 14:36:44 -->
+
+<style>
+    .hope-ui-light,
+    .hope-ui-dark {
+        --hope-colors-background: transparent;
+    }
+</style>
+
+<script>
+    const MAIN_COLOR = 'rgb(240, 128, 128)';
+
+    const observer = new MutationObserver(() => {
+        if (!location.pathname.startsWith('/@manage') && !location.pathname.startsWith('/@login')) {
+            document.querySelectorAll('.hope-ui-light :not(.hope-tooltip):not(.hope-close-button):not(a)').forEach(element => {
+                const computedStyle = getComputedStyle(element);
+
+                if (computedStyle.backgroundImage !== 'none') {
+                    return;
+                }
+
+                if (!['rgba(0, 0, 0, 0)', 'rgba(0, 0, 0, 0.65)', 'rgba(0, 0, 0, 0.09)', MAIN_COLOR].includes(computedStyle.backgroundColor)) {
+                    element.style.backgroundColor = 'rgba(255, 255, 255, 0.8)';
+                }
+            });
+
+            document.querySelectorAll('.hope-ui-dark :not(.hope-tooltip):not(.hope-close-button):not(a)').forEach(element => {
+                const computedStyle = getComputedStyle(element);
+
+                if (computedStyle.backgroundImage !== 'none') {
+                    return;
+                }
+
+                if (!['rgba(0, 0, 0, 0)', 'rgba(0, 0, 0, 0.09)', MAIN_COLOR].includes(computedStyle.backgroundColor)) {
+                    element.style.backgroundColor = 'rgb(32, 36, 37)';
+                }
+            });
+        }
+    });
+
+    observer.observe(document.body, {
+        childList: true, subtree: true
+    });
+</script>
