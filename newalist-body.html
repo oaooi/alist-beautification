@@ -72,7 +72,7 @@
     observe();
 
     function fixLogin() {
-        document.querySelector('a[href="/@login"]').addEventListener('click', () => {
+        document.querySelector('a[href="/@login"]')?.addEventListener('click', () => {
             beautifier.disconnect();
         });
     }
