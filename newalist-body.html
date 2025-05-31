@@ -1,4 +1,4 @@
-<!-- 2025-05-31 10:02:43 -->
+<!-- 2025-05-31 11:55:53 -->
 
 <style>
     .hope-ui-light,
@@ -15,9 +15,20 @@
     const LIGHT_BG_COLOR = 'rgba(255, 255, 255, 0.8)';
     const DARK_BG_COLOR = 'rgb(32, 36, 37)';
 
-    const beautifier = new MutationObserver(() => {
-        document.querySelector('a[href="/@login"]').addEventListener('click', beautifier.disconnect);
+    var _wr = function (type) {
+        var orig = history[type];
+        return function () {
+            var rv = orig.apply(this, arguments);
+            var e = new Event(type);
+            e.arguments = arguments;
+            window.dispatchEvent(e);
+            return rv;
+        };
+    };
+    history.pushState = _wr('pushState');
+    history.replaceState = _wr('replaceState');
 
+    const beautifier = new MutationObserver(() => {
         if (!location.pathname.startsWith('/@manage') && !location.pathname.startsWith('/@login')) {
             document.querySelectorAll(LIGHT_SELECTOR).forEach(element => {
                 const computedStyle = getComputedStyle(element);
@@ -45,7 +56,23 @@
         }
     });
 
-    beautifier.observe(document.body, {
-        childList: true, subtree: true
-    });
+    function observe() {
+        beautifier.observe(document.body, {
+            childList: true,
+            subtree: true
+        });
+    }
+
+    observe();
+
+    function waitLogin() {
+        document.querySelector('a[href="/@login"]').addEventListener('click', () => {
+            beautifier.disconnect();
+        });
+    }
+
+    window.addEventListener('replaceState', observe);
+    window.addEventListener('pushState', observe);
+    window.addEventListener('keydown', waitLogin);
+    window.addEventListener('mousedown', waitLogin);
 </script>
