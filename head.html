@@ -1,12 +1,15 @@
-<!-- 2025-05-18 14:36:44 -->
+<!-- v1 -->
 
+<!-- 引入自定义字体 -->
 <link rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/lxgw-wenkai-webfont/1.7.0/lxgwwenkai-regular.min.css">
 
 <style>
+    /* 移除原生视频控件 */
     video::-webkit-media-controls {
         display: none;
     }
 
+    /* 设置背景图片样式 */
     body {
         background-repeat: no-repeat;
         background-size: cover;
@@ -14,36 +17,42 @@
         background-position: center;
     }
 
+    /* 在此处的url()里修改背景图片地址 */
+    /* 加了个深色遮罩，爱护你的眼睛 */
     body.hope-ui-dark {
         background-color: rgb(32, 36, 37);
         background-image: linear-gradient(rgba(32, 36, 37, 0.8), rgba(32, 36, 37, 0.8)), url('https://t.alcy.cc/moez');
     }
 
+    /* 在此处的url()里修改背景图片地址 */
     body.hope-ui-light {
         background-image: url('https://t.alcy.cc/moez');
     }
 
-    .hope-ui-light .hope-c-PJLV-idwKBiq-css {
+    /* 统一站点公告的样式 */
+    .hope-ui-light .hope-c-PJLV-ikJQsXT-css {
         background: rgba(255, 255, 255, 0.8) !important;
         backdrop-filter: blur(0) !important;
     }
 
-    .hope-ui-dark .hope-c-PJLV-idwKBiq-css {
+    .hope-ui-dark .hope-c-PJLV-ikJQsXT-css {
         background: rgb(32, 36, 37) !important;
         backdrop-filter: blur(0) !important;
     }
 
+    /* 自定义字体 */
     * {
         font-family: "LXGW WenKai", sans-serif;
     }
 </style>
 
-<!--看板娘-->
+<!-- 看板娘 -->
 <script>if (localStorage.getItem('modelId') === null) {
-        localStorage.setItem('modelId', '9');
-        localStorage.setItem('modelTexturesId', '0');
+        localStorage.setItem('modelId', '9'); // 设置默认模型ID
+        localStorage.setItem('modelTexturesId', '0'); // 设置默认皮肤ID
     }
 </script>
 <script src="https://cdn.mmoe.work/live2d-widget/autoload.js"></script>
 
-<script src="https://polyfill.alicdn.com/v3/polyfill.min.js?features=String.prototype.replaceAll"></script>
+<script
+    src="https://s4.zstatic.net/ajax/libs/js-polyfills/0.1.43/polyfill.min.js?features=String.prototype.replaceAll"></script>

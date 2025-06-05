@@ -1,4 +1,7 @@
-(function () {
+// v1
+
+// 提供用来监听代码控制的 url 变化的事件
+(() => {
     const wrapHistoryMethod = (type) => {
         const orig = history[type];
         return function (...args) {
@@ -13,7 +16,18 @@
 })();
 
 class Beautifier {
-    static themeColor = 'rgb(240, 128, 128)';
+    /**
+        * Beautifier 类用于美化页面背景色
+        * 
+        * 其提供了3个方法：
+        * - observe: 开始监听页面变化并美化背景色
+        * - disconnect: 停止监听页面变化
+        * - undo: 恢复页面背景色到默认状态
+        *
+        * 可以通过window.beautifier访问实例对象
+        * 
+     */
+    static themeColor = 'rgb(24, 144, 255)';  // 这是默认的主题色
     static lightBgColor = 'rgba(255, 255, 255, 0.8)';
     static darkBgColor = 'rgb(32, 36, 37)';
 
@@ -25,7 +39,6 @@ class Beautifier {
         'rgba(0, 0, 0, 0.09)'
     ];
 
-
     constructor(themeColor = Beautifier.themeColor, lightBgColor = Beautifier.lightBgColor, darkBgColor = Beautifier.darkBgColor) {
         this.themeColor = themeColor;
         this.lightBgColor = lightBgColor;
@@ -35,7 +48,6 @@ class Beautifier {
 
         this.observer = null;
     }
-
 
     /**
      * @param {'light'|'dark'} theme
@@ -53,7 +65,7 @@ class Beautifier {
 
             if (!this.ignoredColors.includes(computedStyle.backgroundColor)) {
                 element.style.backgroundColor = bgColor;
-                element.dataset.beautified = 'true';
+                element.setAttribute('data-beautified', 'true');
             }
         });
     }
@@ -82,32 +94,34 @@ class Beautifier {
     }
 
     undo() {
-        document.querySelectorAll('.hope-ui-light, .hope-ui-dark').forEach(element => {
-            if (element.dataset.beautified) {
-                element.style.backgroundColor = '';
-                delete element.dataset.beautified;
-            }
-        });
-
         this.disconnect();
+
+        document.body.querySelectorAll('[data-beautified]').forEach(element => {
+            element.style.backgroundColor = '';
+            element.removeAttribute('data-beautified');
+        });
     }
 }
 
-const beautifier = new Beautifier();
+const beautifier = new Beautifier('rgb(240, 128, 128)'); // 务必在这里填入你设置的主题色，没有设置可以不填
+window.beautifier = beautifier;
 beautifier.observe();
 
-function fixLogin(pathname) {
-    if (pathname.startsWith('/@login')) {
-        beautifier.undo();
+// 一个愚蠢到有点无敌的修复机制，不过工作良好
+(() => {
+    function fixLogin(pathname) {
+        if (pathname.startsWith('/@login')) {
+            beautifier.undo();
+        }
+        else {
+            beautifier.disconnect();
+            beautifier.observe();
+        }
     }
-    else {
-        beautifier.disconnect();
-        beautifier.observe();
-    }
-}
 
-['popstate', 'pushState', 'replaceState'].forEach(eventType => {
-    addEventListener(eventType, () => {
-        fixLogin(location.pathname);
+    ['popstate', 'pushState', 'replaceState'].forEach(eventType => {
+        addEventListener(eventType, () => {
+            fixLogin(location.pathname);
+        });
     });
-});
+})();
