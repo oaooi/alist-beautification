@@ -21,18 +21,19 @@
         THEME_COLOR
     ];
 
-    var _wr = function (type) {
-        var orig = history[type];
-        return function () {
-            var rv = orig.apply(this, arguments);
-            var e = new Event(type);
-            e.arguments = arguments;
-            window.dispatchEvent(e);
-            return rv;
+    (function() {
+        const wrapHistoryMethod = (type) => {
+            const orig = history[type];
+            return function(...args) {
+                const rv = orig.apply(this, args);
+                const event = new CustomEvent(type, { detail: args });
+                window.dispatchEvent(event);
+                return rv;
+            };
         };
-    };
-    history.pushState = _wr('pushState');
-    history.replaceState = _wr('replaceState');
+        history.pushState = wrapHistoryMethod('pushState');
+        history.replaceState = wrapHistoryMethod('replaceState');
+    })();
 
     const beautifier = new MutationObserver(() => {
         if (!location.pathname.startsWith('/@manage') && !location.pathname.startsWith('/@login')) {
