@@ -1,4 +1,4 @@
-// v1
+// v2
 
 // 提供用来监听代码控制的 url 变化的事件
 (() => {
@@ -27,12 +27,22 @@ class Beautifier {
         * 可以通过window.beautifier访问实例对象
         * 
      */
+    static ignoredSelectors = [
+        '.hope-tooltip',
+        '.hope-tooltip__arrow',
+        '.hope-checkbox__control',
+        '.hope-close-button',
+        'button:not([aria-haspopup])',
+        'a'
+    ];
+
+    static lightSelector = `.hope-ui-light :not(${Beautifier.ignoredSelectors.join('):not(')})`;
+    static darkSelector = `.hope-ui-dark :not(${Beautifier.ignoredSelectors.join('):not(')})`;
+
     static themeColor = 'rgb(24, 144, 255)';  // 这是默认的主题色
     static lightBgColor = 'rgba(255, 255, 255, 0.8)';
     static darkBgColor = 'rgb(32, 36, 37)';
 
-    static lightSelector = '.hope-ui-light :not(.hope-tooltip):not(.hope-close-button):not(a)';
-    static darkSelector = '.hope-ui-dark :not(.hope-tooltip):not(.hope-close-button):not(a)';
     static ignoredColors = [
         'rgba(0, 0, 0, 0)',
         'rgba(0, 0, 0, 0.65)',
