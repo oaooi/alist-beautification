@@ -1,19 +1,4 @@
-// v3
-
-// 提供用来监听代码控制的 url 变化的事件
-(() => {
-    const wrapHistoryMethod = (type) => {
-        const orig = history[type];
-        return function (...args) {
-            const rv = orig.apply(this, args);
-            const event = new CustomEvent(type, { detail: args });
-            window.dispatchEvent(event);
-            return rv;
-        };
-    };
-    history.pushState = wrapHistoryMethod('pushState');
-    history.replaceState = wrapHistoryMethod('replaceState');
-})();
+// v3-1
 
 class Beautifier {
     /**
@@ -72,7 +57,7 @@ class Beautifier {
     }
 
     #beautify() {
-        if (!location.pathname.startsWith('/@manage') && !location.pathname.startsWith('/@login')) {
+        if (!location.pathname.startsWith('/@manage')) {
             this.#rewriteStyle('light');
             this.#rewriteStyle('dark');
         }
@@ -109,22 +94,3 @@ const beautifier = new Beautifier();
 window.beautifier = beautifier;
 
 beautifier.observe();
-
-// 一个愚蠢到有点无敌的修复机制，不过工作良好
-(() => {
-    function fixLogin(pathname) {
-        if (pathname.startsWith('/@login')) {
-            beautifier.undo();
-        }
-        else {
-            beautifier.disconnect();
-            beautifier.observe();
-        }
-    }
-
-    ['popstate', 'pushState', 'replaceState'].forEach(eventType => {
-        addEventListener(eventType, () => {
-            fixLogin(location.pathname);
-        });
-    });
-})();
