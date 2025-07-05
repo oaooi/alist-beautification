@@ -4,6 +4,8 @@
 
 事实上，它并非是按照以往的做法，对alist的前端元素进行枚举修改，而是加载了一个动态的美化监视器，自动地对带有背景色的元素进行替换颜色，从而在alist前端功能更新时有更好的适应性。
 
+可以在[我的文章](https://blog.mmoe.work/alist-js-beautification/)查看相关介绍。
+
 ## 组件
 
 - `head.html`: 自定义头部，不过事实上与这个项目的主体没有什么关系，是自定义字体一类的传统的美化代码。
@@ -58,7 +60,7 @@ static lightBgColor = 'rgba(255, 255, 255, 0.8)';
 static darkBgColor = 'rgba(32, 36, 37, 0.8)';
 ```
 
-## 关于对登录界面的美化
+## 对登录界面的美化
 
 如果你想要对alist的登录界面进行美化，可以使用`body_with_login.html`替换`body.html`的内容。
 
