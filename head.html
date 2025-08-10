@@ -1,4 +1,4 @@
-<!-- v3 -->
+<!-- v1 -->
 
 <!-- 引入自定义字体 -->
 <link rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/lxgw-wenkai-webfont/1.7.0/lxgwwenkai-regular.min.css">
@@ -21,38 +21,48 @@
     /* 加了个深色遮罩，爱护你的眼睛 */
     body.hope-ui-dark {
         background-color: rgb(32, 36, 37);
-        background-image: linear-gradient(rgba(32, 36, 37, 0.7), rgba(32, 36, 37, 0.7)), url('https://t.alcy.cc/moez');
+        background-image: linear-gradient(rgba(32, 36, 37, 0.8), rgba(32, 36, 37, 0.8)), url('https://tc.alcy.cc/i/2025/07/29/6887a5642ee83.webp');
     }
-
     /* 在此处的url()里修改背景图片地址 */
+    /*API地址：https://t.alcy.cc/moez*/
+
     body.hope-ui-light {
-        background-image: url('https://t.alcy.cc/moez');
+        background-image: url('https://tc.alcy.cc/i/2025/07/29/6887a5642ee83.webp');
     }
+    /* 在此处的url()里修改背景图片地址 */
+    /*API地址：https://t.alcy.cc/moez*/
 
     /* 统一站点公告的样式 */
     .hope-ui-light .hope-c-PJLV-ikJQsXT-css {
         background: rgba(255, 255, 255, 0.8) !important;
-        backdrop-filter: blur(0) !important;
+        backdrop-filter: blur(5px) !important;
     }
 
     .hope-ui-dark .hope-c-PJLV-ikJQsXT-css {
-        background: rgb(32, 36, 37) !important;
-        backdrop-filter: blur(0) !important;
+        background: rgba(32, 36, 37, 0.8) !important;
+        backdrop-filter: blur(5px) !important;
     }
 
     /* 自定义字体 */
     * {
         font-family: "LXGW WenKai", sans-serif;
     }
+
+/* 当屏幕宽度小于等于 768px (通常是手机或平板竖屏) 时 */
+@media (max-width: 768px) {
+  /* 隐藏看板娘 */
+  #waifu {
+    display: none !important;
+  }
+}
 </style>
 
 <!-- 看板娘 -->
 <script>if (localStorage.getItem('modelId') === null) {
         localStorage.setItem('modelId', '3'); // 设置默认模型ID
         localStorage.setItem('modelTexturesId', '0'); // 设置默认皮肤ID
-    }
+}
 </script>
-<script src="https://l2d.mmoe.work/dist/autoload.js"></script>
+<script src="https://fastly.jsdelivr.net/npm/live2d-widgets@1.0.0-rc.6/dist/autoload.js"></script>
 
-<script
-    src="https://s4.zstatic.net/ajax/libs/js-polyfills/0.1.43/polyfill.min.js?features=String.prototype.replaceAll"></script>
+<script src="https://s4.zstatic.net/ajax/libs/js-polyfills/0.1.43/polyfill.min.js?features=String.prototype.replaceAll"></script>
