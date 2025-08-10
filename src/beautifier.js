@@ -33,7 +33,8 @@ class Beautifier {
         '.hope-checkbox__control',
         '.hope-modal__overlay',
         'button:not(.hope-menu__trigger)',
-        'svg'
+        'svg',
+        '.art-video-player'
     ];
 
     static getSelector(mainSelector) {
