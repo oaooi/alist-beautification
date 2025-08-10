@@ -27,9 +27,9 @@ class Beautifier {
 
     static lightSelector = Beautifier.getSelector('.hope-ui-light');
     static darkSelector = Beautifier.getSelector('.hope-ui-dark');
-
-    static lightBgColor = 'rgba(255, 255, 255, 0.8)';
-    static darkBgColor = 'rgb(32, 36, 37)';
+    
+    static lightBgColor = 'rgba(255, 255, 255, 0.7)';
+    static darkBgColor = 'rgba(32, 36, 37,0.7)';
 
     static specificPrefix = 'rgba(132, 133, 141';
 
@@ -50,7 +50,7 @@ class Beautifier {
             if (computedStyle.backgroundColor !== 'rgba(0, 0, 0, 0)' &&
                 !computedStyle.backgroundColor.startsWith(Beautifier.specificPrefix)) {
                 element.style.backgroundColor = bgColor;
-
+                element.style.backdropFilter = 'blur(10px)';
                 element.setAttribute('data-beautified', 'true');
             }
         });
