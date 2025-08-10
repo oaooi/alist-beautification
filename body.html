@@ -54,8 +54,8 @@
         static lightSelector = Beautifier.getSelector('.hope-ui-light');
         static darkSelector = Beautifier.getSelector('.hope-ui-dark');
 
-        static lightBgColor = 'rgba(255, 255, 255, 0.8)';
-        static darkBgColor = 'rgb(32, 36, 37)';
+        static lightBgColor = 'rgba(255, 255, 255, 0.7)';
+        static darkBgColor = 'rgba(32, 36, 37,0.7)';
 
         static specificPrefix = 'rgba(132, 133, 141';
 
@@ -66,17 +66,21 @@
         /**
          * @param {'light'|'dark'} theme
          */
-        #rewriteStyle(theme) {
+        #rewriteBgColor(theme) {
             let selector = theme === 'light' ? Beautifier.lightSelector : Beautifier.darkSelector;
             let bgColor = theme === 'light' ? Beautifier.lightBgColor : Beautifier.darkBgColor;
 
             document.querySelectorAll(selector).forEach(element => {
                 const computedStyle = getComputedStyle(element);
 
+                if (computedStyle.backgroundImage !== 'none') {
+                    return;
+                }
+
                 if (computedStyle.backgroundColor !== 'rgba(0, 0, 0, 0)' &&
                     !computedStyle.backgroundColor.startsWith(Beautifier.specificPrefix)) {
                     element.style.backgroundColor = bgColor;
-
+                    element.style.backdropFilter = 'blur(10px)';
                     element.setAttribute('data-beautified', 'true');
                 }
             });
@@ -84,8 +88,8 @@
 
         #beautify() {
             if (!location.pathname.startsWith('/@manage') && !location.pathname.startsWith('/@login')) {
-                this.#rewriteStyle('light');
-                this.#rewriteStyle('dark');
+                this.#rewriteBgColor('light');
+                this.#rewriteBgColor('dark');
             }
         }
 
@@ -110,7 +114,6 @@
 
             document.body.querySelectorAll('[data-beautified]').forEach(element => {
                 element.style.backgroundColor = '';
-
                 element.removeAttribute('data-beautified');
             });
         }
