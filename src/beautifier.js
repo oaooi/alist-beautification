@@ -66,7 +66,7 @@ class Beautifier {
             if (computedStyle.backgroundColor !== 'rgba(0, 0, 0, 0)' &&
                 !computedStyle.backgroundColor.startsWith(Beautifier.specificPrefix)) {
                 element.style.backgroundColor = bgColor;
-                element.style.backdropFilter = 'blur(10px)';
+                //element.style.backdropFilter = 'blur(10px)';
                 element.setAttribute('data-beautified', 'true');
             }
         });
