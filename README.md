@@ -1,4 +1,4 @@
-# Fork: 添加高斯模糊，修复一些bug 
+# Fork: 修复一些bug 
 # ALIST-BEAUTIFICATION
 
 这是一个alist美化代码存储库，但特别的是，它提供了一种与传统美化代码不同的、全新的实现原理。
